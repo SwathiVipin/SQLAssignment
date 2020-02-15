@@ -1,0 +1,78 @@
+List the department number and total salary payable in each department.
+Ans:- select Distinct Emp_deptNo,SUM(Emp_Salary)from Employee GROUP BY Emp_deptNo;
+
+List the jobs and number of employees in each job. The result should be in the descending order of the number of employees.
+Ans :- SELECT  DISTINCT EMP_DESIGNATION,COUNT(EmployeeID)AS NoOfEmployees  FROM Employee GROUP BY EMP_DESIGNATION ORDER BY NoOfEmployees DESC ; 
+
+List employees whose job is same as that of Smith
+Ans :- select * from Employee where EMP_DESIGNATION = (select EMP_DESIGNATION from Employee where EmpName='Smith');
+
+List employees who have joined after Adam
+Ans :- select * from Employee where Emp_joinDate > (select emp_joinDate from employee where EmpName ='Adam');
+
+List employees who salary us greater than Scott’s salary
+Ans :- select * from Employee  where salary >(select salary from Employee where EmpName='Scott');
+
+List employee name, department number and their corresponding department name.
+Ans :- select E.Empname,E.Emp_deptNo,D.DeptName from Employee E ,Department D where E.emp_deptNo = D.DeptNO;
+
+List employee name and their manager name
+Ans :- select E.Empname,E.Emp_deptNo,D.DeptName,D.ManagerName from Employee E ,Department D
+	where E.emp_deptNo = D.DeptNO;
+
+List employees who work in Research department
+Ans :- select  * from Employee E ,Department D
+	where E.emp_deptNo = D.DeptNO And D.deptName= 'Research';
+
+List all rows from EMP table and only the matching rows from DEPT table.
+Ans :- select *  from Employee E ,Department D where E.emp_deptNo = D.DeptNO;
+
+Write a query to perform full outer join between EMP and DEPT tables
+Ans :- select *  from Employee E FULL OUTER JOIN Department D ON E.emp_deptNo = D.DeptNO;
+
+List employees show salary is > the max salary in deptno 30
+Ans :- select * from Employee  where Emp_Salary > (select max(Emp_Salary) from Employee where Emp_DeptNo =30);
+
+List all employees whose department and designation is same as that of employee with empno 7788.
+Ans :- select * from Employee E
+	where E.Emp_Designation in (select Emp_Designation from Employee where EmployeeID=7789) And
+		E.emp_deptNo in (select  E.emp_deptNo from Employee where EmployeeID=7789);
+
+
+List employee who are not managers
+Ans :- Select Emp_Designation from Employee where Emp_Designation not like'Manager';
+
+List all managers
+Ans :- Select Emp_Designation from Employee where Emp_Designation like'Manager';
+
+List the count and average salary for employees in department 20	
+
+Ans :- Select count(*) as Numbers,AVG(Emp_Salary) As Average from Employee where emp_deptNo =20;
+
+List the employee name , hire date in the descending order of the hire date
+Ans :- Select Empname,Emp_hireDate  from Employee order by Emp_hireDate desc;
+
+List the department numbers and number of employees in each department
+Ans :- SELECT  DISTINCT emp_deptNo,COUNT(EmployeeID)AS NoOfEmployees FROM Employee GROUP BY emp_deptNo 
+
+List the jobs and number of employees in each job. The result should be in the descending order of the number of employees.
+
+Ans :- SELECT  DISTINCT Emp_Designation,COUNT(EmployeeID)AS NoOfEmployees 
+ 	FROM Employee GROUP BY Emp_Designation
+ 	ORDER BY NoOfEmployees DESC ;
+
+List the total salary, maximum and minimum salary and average salary of the employees jobwise.
+
+Ans :- SELECT  DISTINCT Emp_Designation,Max(Emp_Salary)AS maxSalary,Min(Emp_Salary) as minSalary ,AVG(Emp_Salary) 
+ 	FROM Employee GROUP BY Emp_Designation;
+
+List the total salary, maximum and minimum salary and average salary of the employees, for department 20.
+Ans :-select sum(Emp_Salary+Emp_PF+Emp_HRA+Emp_DA)As totalSalary,Max(Emp_Salary)AS maxSalary,Min(Emp_Salary) as minSalary ,AVG(Emp_Salary)as Average
+ 	from Employee where  Emp_deptNo=2;
+
+List the average salary of the employees job wise, for department 20 and display only those rows having an average salary > 1000
+Ans :-  select Distinct Emp_Designation, sum(Emp_Salary+Emp_PF+Emp_HRA+Emp_DA)As totalSalary,Max(Emp_Salary)AS maxSalary,Min(Emp_Salary) as minSalary ,AVG(Emp_Salary)as Average
+ 	from Employee
+ 	where   Emp_deptNo=2 
+	group by Emp_Designation 
+	having AVG(Emp_Salary) >1000 
